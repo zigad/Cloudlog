@@ -16,7 +16,10 @@ class Logbooks extends CI_Controller {
 	function index() {
 
 		$this->load->model('User_Logbooks');
+		$this->load->model('Logbook_model');
 		$data['logbooks'] = $this->User_Logbooks->logbooks();
+		
+		$data['is_there_logbook_qsos'] = $this->Logbook_model->check_for_logbook_qsos();
 
 		$data['current_default'] = $this->User_Logbooks->find_default();
 
@@ -72,6 +75,14 @@ class Logbooks extends CI_Controller {
 		$this->load->model('User_Logbooks');
 
 		$this->User_Logbooks->set_active($current, $new);
+			
+		redirect('logbooks');
+	}
+
+	function assign_qsos($id) {
+		$this->load->model('User_Logbooks');
+
+		$this->User_Logbooks->assign_qsos($id);
 			
 		redirect('logbooks');
 	}
