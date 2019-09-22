@@ -146,6 +146,12 @@ class Logbook_model extends CI_Model {
       $dxcc_id = $this->input->post('dxcc_id');
     }
 
+    if($this->session->userdata('active_logbook_id') != 0) {
+      $logbook_id = $this->session->userdata('active_logbook_id');
+    } else {
+      $logbook_id = $this->session->userdata('default_logbook_id');
+    }
+
     // Create array with QSO Data
     $data = array(
             'COL_TIME_ON' => $datetime,
@@ -197,6 +203,7 @@ class Logbook_model extends CI_Model {
             'COL_CQZ' => $cqz,
             'COL_SOTA_REF' => trim($this->input->post('sota_ref')),
 			      'COL_DARC_DOK' => trim($this->input->post('darc_dok')),
+            'logbook_id' => $logbook_id
     );
 
     // If station profile has been provided fill in the fields

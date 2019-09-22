@@ -349,6 +349,8 @@
 
   </div>
 
+<p style="text-align: right;"><span class="badge badge-info">Active Logbook: <?php echo $this->session->userdata('active_logbook_name'); ?></span></p>
+
 </div>
 
 </div>

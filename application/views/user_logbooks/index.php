@@ -13,7 +13,7 @@
     <?php echo $page_title; ?>
   </div>
   <div class="card-body">
-    <p class="card-text">Need some text here</p>
+    <p class="card-text">Logbooks are your overall store for QSOs, we could recommend creating one per callsign you have.</p>
 
 		<?php if ($logbooks->num_rows() > 0) { ?>
 
