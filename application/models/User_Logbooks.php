@@ -122,4 +122,45 @@ class User_Logbooks extends CI_Model {
         		return "0";
         	}
         }
+
+        // Get data for session storage
+        public function logbook_session_data(){
+
+        	// Set Default Logbook
+      		$this->db->where('default_logbook', 1);
+        	$query = $this->db->get('logbooks');
+
+        	if($query->num_rows() >= 1) {
+        		foreach ($query->result() as $row)
+				{
+					$newdata = array(
+					        'default_logbook_id'	=> $row->id,
+					        'default_logbook_name'	=> $row->logbook_name
+					);
+
+					$this->session->set_userdata($newdata);
+				}
+
+        	} else {
+        		redirect('logbooks');
+        	}
+
+        	// Set Default Logbook
+      		$this->db->where('active_logbook', 1);
+        	$query = $this->db->get('logbooks');
+
+        	if($query->num_rows() >= 1) {
+        		foreach ($query->result() as $row)
+				{
+					$newdata = array(
+					        'active_logbook_id'		=> $row->id,
+					        'active_logbook_name'	=> $row->logbook_name
+					);
+
+					$this->session->set_userdata($newdata);
+				}
+        	} else {
+        		redirect('logbooks');
+        	}
+        }
 }

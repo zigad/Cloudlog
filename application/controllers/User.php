@@ -356,6 +356,11 @@ class User extends CI_Controller {
 			if($this->user_model->login() == 1) {
 				$this->session->set_flashdata('notice', 'User logged in');
 				$this->user_model->update_session($data['user']->user_id);
+
+				// Load Logbook Info
+				$this->load->model('User_Logbooks');
+				$this->User_Logbooks->logbook_session_data();
+
 				redirect('dashboard');
 			} else {
 				$this->session->set_flashdata('error', 'Incorrect username or password!');

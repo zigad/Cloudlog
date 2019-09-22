@@ -25,6 +25,7 @@ class Logbooks extends CI_Controller {
 
 		$data['current_active'] = $this->User_Logbooks->find_active();
 
+print_r($this->session->userdata());
 		// Render Page
 		$data['page_title'] = "Logbooks";
 		$this->load->view('interface_assets/header', $data);
@@ -59,7 +60,8 @@ class Logbooks extends CI_Controller {
 		$this->load->model('User_Logbooks');
 
 		$this->User_Logbooks->delete($id);
-			
+		$this->User_Logbooks->logbook_session_data();
+
 		redirect('logbooks');
 	}
 
@@ -67,7 +69,8 @@ class Logbooks extends CI_Controller {
 		$this->load->model('User_Logbooks');
 
 		$this->User_Logbooks->set_default($current, $new);
-			
+		$this->User_Logbooks->logbook_session_data();
+
 		redirect('logbooks');
 	}
 
@@ -75,7 +78,8 @@ class Logbooks extends CI_Controller {
 		$this->load->model('User_Logbooks');
 
 		$this->User_Logbooks->set_active($current, $new);
-			
+		
+		$this->User_Logbooks->logbook_session_data();
 		redirect('logbooks');
 	}
 
@@ -85,5 +89,11 @@ class Logbooks extends CI_Controller {
 		$this->User_Logbooks->assign_qsos($id);
 			
 		redirect('logbooks');
+	}
+
+	function set_session_data() {
+		$this->load->model('User_Logbooks');
+
+		$this->User_Logbooks->logbook_session_data();
 	}
 }

@@ -42,7 +42,9 @@
 					<th scope="col">Logbook QSOs</th>
 					<th scope="col"></th>
 					<th scope="col"></th>
+					<?php if($is_there_logbook_qsos == 0) { ?>
 					<th scope="col">Assign</th>
+					<?php } ?>
 					<th scope="col"></th>
 				</tr>
 			</thead>
