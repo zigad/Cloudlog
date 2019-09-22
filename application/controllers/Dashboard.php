@@ -53,6 +53,9 @@ class Dashboard extends CI_Controller {
 		
 		$data['last_five_qsos'] = $this->logbook_model->get_last_qsos('11');
 
+		$this->load->model('User_Logbooks');
+		$data['logs_exist'] = $this->User_Logbooks->log_exists();
+
 		$data['page_title'] = "Dashboard";
 
 		$this->load->view('interface_assets/header', $data);

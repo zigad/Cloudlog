@@ -1,6 +1,13 @@
 <div class="container dashboard">
 <?php if(($this->config->item('use_auth') && ($this->session->userdata('user_type') >= 2)) || $this->config->item('use_auth') === FALSE) { ?>
 
+
+	<?php if($logs_exist == 0) { ?>
+		<div class="alert alert-danger" role="alert">
+			  <span class="badge badge-warning">Important</span> You must create a logbook before logging any QSOs. <a href="<?php echo site_url('logbooks'); ?>">Create a Logbook</a>
+		</div>
+	<?php } ?>
+
 	<?php if($todays_qsos >= 1) { ?>
 		<div class="alert alert-success" role="alert">
 			  You have had <strong><?php echo $todays_qsos; ?></strong> QSOs Today!
@@ -11,6 +18,7 @@
 		</div>
 	<?php } ?>
 <?php } ?>
+
 
 <!-- Map -->
 <div id="map" style="width: 100%; height: 300px"></div>
