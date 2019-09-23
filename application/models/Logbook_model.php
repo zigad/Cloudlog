@@ -515,7 +515,7 @@ class Logbook_model extends CI_Model {
     return $query;
   }
 
-  function get_qsos($num, $offset, $logbook_id) {
+  function get_qsos($num, $offset, $logbook_id = null) {
     $this->db->select('COL_CALL, COL_BAND, COL_TIME_ON, COL_RST_RCVD, COL_RST_SENT, COL_MODE, COL_NAME, COL_COUNTRY, COL_PRIMARY_KEY, COL_SAT_NAME, COL_GRIDSQUARE, COL_QSL_RCVD, COL_EQSL_QSL_RCVD, COL_EQSL_QSL_SENT, COL_QSL_SENT, COL_STX, COL_STX_STRING, COL_SRX, COL_SRX_STRING, COL_OPERATOR, COL_STATION_CALLSIGN, COL_LOTW_QSL_SENT, COL_LOTW_QSL_RCVD, COL_VUCC_GRIDS');
 
     if($logbook_id != "") {
