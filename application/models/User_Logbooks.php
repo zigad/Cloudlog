@@ -10,7 +10,7 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 class User_Logbooks extends CI_Model {
 
         public function logbooks() {
-			$this->db->select('logbooks.id, logbooks.logbook_name, logbooks.active_logbook, logbooks.default_logbook, count('.$this->config->item('table_name').'.logbook_id) as qso_total');
+			$this->db->select('logbooks.id, logbooks.logbook_name, logbooks.active_logbook, count('.$this->config->item('table_name').'.logbook_id) as qso_total');
         	$this->db->from('logbooks');
         	$this->db->join($this->config->item('table_name'),'logbooks.id = '.$this->config->item('table_name').'.logbook_id','left');
        		$this->db->group_by('logbooks.id');
@@ -31,26 +31,8 @@ class User_Logbooks extends CI_Model {
         }
 
         public function delete($id) {
-			$this->db->delete('logbooks', array('id' => $id)); 
-        }
-
-        public function set_default($current, $new) {
-        	// Deselect current default
-
-			$current_default = array(
-				'default_logbook' => null,
-			);
-
-			$this->db->where('id', $current);
-			$this->db->update('logbooks', $current_default);
-
-			 // Deselect current default
-			$newdefault = array(
-			        'default_logbook' => 1,
-			);
-
-			$this->db->where('id', $new);
-			$this->db->update('logbooks', $newdefault);
+			$this->db->delete('logbooks', array('id' => $id));
+            $this->db->delete($this->config->item('table_name') , array('logbook_id' => $id));
         }
 
         public function set_active($current, $new) {
@@ -83,21 +65,6 @@ class User_Logbooks extends CI_Model {
 			$this->db->update($this->config->item('table_name'), $data);
         }
 
-        public function find_default () {
-        	$this->db->where('default_logbook', 1);
-        	$query = $this->db->get('logbooks');
-
-        	if($query->num_rows() >= 1) {
-        		foreach ($query->result() as $row)
-				{
-				        return $row->id;
-				}
-
-        	} else {
-        		return "0";
-        	}
-        }
-
         public function log_exists() {
         	$query = $this->db->get('logbooks');
 
@@ -125,26 +92,6 @@ class User_Logbooks extends CI_Model {
 
         // Get data for session storage
         public function logbook_session_data(){
-
-        	// Set Default Logbook
-      		$this->db->where('default_logbook', 1);
-        	$query = $this->db->get('logbooks');
-
-        	if($query->num_rows() >= 1) {
-        		foreach ($query->result() as $row)
-				{
-					$newdata = array(
-					        'default_logbook_id'	=> $row->id,
-					        'default_logbook_name'	=> $row->logbook_name
-					);
-
-					$this->session->set_userdata($newdata);
-				}
-
-        	} else {
-        		redirect('logbooks');
-        	}
-
         	// Set Default Logbook
       		$this->db->where('active_logbook', 1);
         	$query = $this->db->get('logbooks');

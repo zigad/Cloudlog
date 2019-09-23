@@ -17,12 +17,6 @@
 
 		<?php if ($logbooks->num_rows() > 0) { ?>
 
-		<?php if($current_default == 0) { ?>
-		<div class="alert alert-danger" role="alert">
-		  Attention you need to set an default logbook
-		</div>
-		<?php } ?>
-
 		<?php if($current_active == 0) { ?>
 		<div class="alert alert-danger" role="alert">
 		  Attention you need to set an active logbook
@@ -41,7 +35,6 @@
 					<th scope="col">Logbook Name</th>
 					<th scope="col">Logbook QSOs</th>
 					<th scope="col"></th>
-					<th scope="col"></th>
 					<?php if($is_there_logbook_qsos == 0) { ?>
 					<th scope="col">Assign</th>
 					<?php } ?>
@@ -53,13 +46,6 @@
 				<tr>
 					<td><?php echo $row->logbook_name;?></td>
 					<td><?php echo $row->qso_total;?></td>
-					<td>
-						<?php if($row->default_logbook != 1) { ?>			
-							<a href="<?php echo site_url('logbooks/set_default/').$current_default."/".$row->id; ?>" class="btn btn-outline-secondary btn-sm" onclick="return confirm('Are you sure you want to make logbook <?php echo $row->logbook_name; ?> the default logbook?');">Set Default</a>
-						<?php } else { ?>
-							<span class="badge badge-success">Default Logbook</span>
-						<?php } ?>
-					</td>
 					<td>
 						<?php if($row->active_logbook != 1) { ?>			
 							<a href="<?php echo site_url('logbooks/set_active/').$current_active."/".$row->id; ?>" class="btn btn-outline-secondary btn-sm btn-sm" onclick="return confirm('Are you sure you want to make logbook <?php echo $row->logbook_name; ?> the active logbook?');">Set Active</a>

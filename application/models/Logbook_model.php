@@ -146,10 +146,18 @@ class Logbook_model extends CI_Model {
       $dxcc_id = $this->input->post('dxcc_id');
     }
 
-    if($this->session->userdata('active_logbook_id') != 0) {
+    // Get the current active logbook
+    $CI =& get_instance();
+    $CI->load->model('User_Logbooks');
+
+    $active_logbook_id = $CI->User_Logbooks->find_active();
+
+    if($active_logbook_id != 0) {
       $logbook_id = $this->session->userdata('active_logbook_id');
     } else {
-      $logbook_id = $this->session->userdata('default_logbook_id');
+      
+      // Fail the upload.
+      exit;
     }
 
     // Create array with QSO Data
@@ -1063,6 +1071,20 @@ class Logbook_model extends CI_Model {
           $cq_zone = NULL;
         }
 
+        // Get the current active logbook
+        $CI =& get_instance();
+        $CI->load->model('User_Logbooks');
+
+        $active_logbook_id = $CI->User_Logbooks->find_active();
+
+        if($active_logbook_id != 0) {
+          $logbook_id = $this->session->userdata('active_logbook_id');
+        } else {
+          
+          // Fail the upload.
+          exit;
+        }
+
         if (isset($record['call'])){
           $this->db->where('COL_CALL', $record['call']);
         }
@@ -1225,7 +1247,8 @@ class Logbook_model extends CI_Model {
                 'COL_UKSMG' => (!empty($record['uksmg'])) ? $record['uksmg'] : '',
                 'COL_USACA_COUNTIES' => (!empty($record['usaca_counties'])) ? $record['usaca_counties'] : '',
                 'COL_VUCC_GRIDS' =>((!empty($record['vucc_grids']))) ? $record['vucc_grids'] : '',
-                'COL_WEB' => (!empty($record['web'])) ? $record['web'] : ''
+                'COL_WEB' => (!empty($record['web'])) ? $record['web'] : '',
+                'logbook_id' => $logbook_id
             );
 
             if($station_id != "0") {

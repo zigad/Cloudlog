@@ -21,11 +21,8 @@ class Logbooks extends CI_Controller {
 		
 		$data['is_there_logbook_qsos'] = $this->Logbook_model->check_for_logbook_qsos();
 
-		$data['current_default'] = $this->User_Logbooks->find_default();
-
 		$data['current_active'] = $this->User_Logbooks->find_active();
 
-print_r($this->session->userdata());
 		// Render Page
 		$data['page_title'] = "Logbooks";
 		$this->load->view('interface_assets/header', $data);
