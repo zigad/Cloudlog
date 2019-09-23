@@ -5,15 +5,15 @@ class Logbook extends CI_Controller {
 
 	function index()
 	{
-				$this->load->model('user_model');
-				if(!$this->user_model->authorize($this->config->item('auth_mode'))) {
-						if($this->user_model->validate_session()) {
-								$this->user_model->clear_session();
-								show_error('Access denied<p>Click <a href="'.site_url('user/login').'">here</a> to log in as another user', 403);
-						} else {
-								redirect('user/login');
-						}
-				}
+		$this->load->model('user_model');
+		if(!$this->user_model->authorize($this->config->item('auth_mode'))) {
+			if($this->user_model->validate_session()) {
+				$this->user_model->clear_session();
+				show_error('Access denied<p>Click <a href="'.site_url('user/login').'">here</a> to log in as another user', 403);
+			} else {
+				redirect('user/login');
+			}
+		}
 
 		$this->load->library('pagination');
 		$config['base_url'] = base_url().'index.php/logbook/index/';
@@ -28,8 +28,21 @@ class Logbook extends CI_Controller {
 		$this->pagination->initialize($config);
 
 		//load the model and get results
+
 		$this->load->model('logbook_model');
-		$data['results'] = $this->logbook_model->get_qsos($config['per_page'],$this->uri->segment(3));
+
+		$this->load->model('User_Logbooks');
+
+		$this->load->model('Logbook_model');
+		$data['logbook_list'] = $this->User_Logbooks->logbooks();
+
+		if($this->uri->segment(4) != "") {
+			$data['results'] = $this->logbook_model->get_qsos($config['per_page'],$this->uri->segment(3),$this->uri->segment(4));
+		} else {
+			$logbook_id = null;
+			$data['results'] = $this->logbook_model->get_qsos($config['per_page'],$this->uri->segment(3), $logbook_id);
+		}
+
 
 		// Calculate Lat/Lng from Locator to use on Maps
 		if($this->session->userdata('user_locator')) {

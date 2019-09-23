@@ -19,15 +19,15 @@ class Logbook_model extends CI_Model {
       $prop_mode = "";
     }
 
-        if($this->input->post('sat_name')) {
-            $prop_mode = "SAT";
-        }
+    if($this->input->post('sat_name')) {
+      $prop_mode = "SAT";
+    }
 
-        if($this->session->userdata('user_locator')){
-            $locator = $this->session->userdata('user_locator');
-        } else {
-            $locator = $this->config->item('locator');
-        }
+    if($this->session->userdata('user_locator')){
+      $locator = $this->session->userdata('user_locator');
+    } else {
+      $locator = $this->config->item('locator');
+    }
 
     // Create array with QSO Data
 
@@ -507,9 +507,19 @@ class Logbook_model extends CI_Model {
     return $query;
   }
 
-  function get_qsos($num, $offset) {
+  function get_qsos($num, $offset, $logbook_id) {
     $this->db->select('COL_CALL, COL_BAND, COL_TIME_ON, COL_RST_RCVD, COL_RST_SENT, COL_MODE, COL_NAME, COL_COUNTRY, COL_PRIMARY_KEY, COL_SAT_NAME, COL_GRIDSQUARE, COL_QSL_RCVD, COL_EQSL_QSL_RCVD, COL_EQSL_QSL_SENT, COL_QSL_SENT, COL_STX, COL_STX_STRING, COL_SRX, COL_SRX_STRING, COL_OPERATOR, COL_STATION_CALLSIGN, COL_LOTW_QSL_SENT, COL_LOTW_QSL_RCVD, COL_VUCC_GRIDS');
+
+    if($logbook_id != "") {
+      $offset = 0;
+      $this->db->where('logbook_id', $logbook_id);
+    }elseif ($this->session->userdata('active_logbook_id') != "") {
+      $this->db->where('logbook_id', $this->session->userdata('active_logbook_id'));
+    }
+
+
     $this->db->order_by("COL_TIME_ON", "desc");
+
 
     $query = $this->db->get($this->config->item('table_name'), $num, $offset);
 
