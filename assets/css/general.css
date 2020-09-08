@@ -212,3 +212,29 @@ color: #ffffff;
 #myTab .nav-link {
     padding: 8px !important;
 }
+
+
+/* QSL Card Label CSS */
+
+body {
+    background-color: #FAFAFA !important;
+}
+
+.navbar {
+    border-top: 3px rgb(238,90,73) solid;
+    background-color: #ffffff !important;
+}
+
+#qsl_card_labels_container h2 {
+    font-size: 24px;
+}
+
+#qsl_card_labels_container .heading_titles {
+    border-bottom: 2px #DCDCDC solid;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.qsl-row {
+    margin-bottom: 10px;
+}
