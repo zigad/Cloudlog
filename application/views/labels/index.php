@@ -13,8 +13,7 @@
 
 	<div class="card-body">
     	<p class="card-text">I need to write some introduction text to how QSL Card Labels work</p>
-    	<a href="#" class="btn btn-outline-primary btn-sm">Create New Label Type</a>
-
+    	<a href="<?php echo site_url('labels/create'); ?>" class="btn btn-outline-primary btn-sm">Create New Label Type</a>
 	</div>
 </div>
 
