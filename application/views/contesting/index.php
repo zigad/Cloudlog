@@ -1,5 +1,5 @@
 <div class="container qso_panel contesting">
-    <button type="button" class="btn btn-sm btn-warning float-right" onclick="reset_contest_session()"><i class="fas fa-sync-alt"></i> <?php echo $this->lang->line('contesting_button_reset_contest_session'); ?></button>
+    <a style="margin-left: 10px;" class="btn btn-sm btn-info float-right" href="">Export Log</a>  <button type="button" class="btn btn-sm btn-warning float-right" onclick="reset_contest_session()"><i class="fas fa-sync-alt"></i> <?php echo $this->lang->line('contesting_button_reset_contest_session'); ?></button>
     <h2><?php echo $this->lang->line('contesting_page_title'); ?></h2>
     <div class="row">
 

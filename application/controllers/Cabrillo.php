@@ -31,7 +31,7 @@ class Cabrillo extends CI_Controller {
 
         $this->load->library('Cabrilloformat');
 
-        echo $this->cabrilloformat->header("RSGB-AFS", "2M0SQL", 100,"2M0SQL", "WWYC", "Peter Goodhall", "Line 1", "Line 2", "Line 3", "test output");
+        echo $this->cabrilloformat->header($contest_id, "2M0SQL", 100,"2M0SQL", "WWYC", "Peter Goodhall", "Line 1", "Line 2", "Line 3", "test output");
         foreach ($qsos->result() as $row)
         {
             echo $this->cabrilloformat->qso($row);
