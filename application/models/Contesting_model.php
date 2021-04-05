@@ -119,4 +119,31 @@ class Contesting_model extends CI_Model {
 		$this->db->where('id', $id);
 		$this->db->update('contest', $data);
 	}
+
+	function export_custom($from, $to, $station_id, $contest_id) {
+        $this->db->select(''.$this->config->item('table_name').'.*, station_profile.*');
+        $this->db->from($this->config->item('table_name'));
+        $this->db->where($this->config->item('table_name').'.station_id', $station_id);
+
+        // If date is set, we format the date and add it to the where-statement
+        if ($from != 0) {
+            $from = DateTime::createFromFormat('d/m/Y', $from);
+            $from = $from->format('Y-m-d');
+            $this->db->where("date(".$this->config->item('table_name').".COL_TIME_ON) >= '".$from."'");
+        }
+        if ($to != 0) {
+            $to = DateTime::createFromFormat('d/m/Y', $to);
+            $to = $to->format('Y-m-d');
+            $this->db->where("date(".$this->config->item('table_name').".COL_TIME_ON) <= '".$to."'");
+        }
+
+		$this->db->where($this->config->item('table_name').'.COL_CONTEST_ID', $contest_id);
+
+        $this->db->order_by($this->config->item('table_name').".COL_TIME_ON", "ASC");
+
+        $this->db->join('station_profile', 'station_profile.station_id = '.$this->config->item('table_name').'.station_id');
+
+        return $this->db->get();
+    }
+
 }
